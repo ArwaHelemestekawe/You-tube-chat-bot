@@ -1,4 +1,4 @@
-# 📦 Imports
+
 import streamlit as st
 import re
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
@@ -8,7 +8,7 @@ from langchain_community.vectorstores import FAISS
 from huggingface_hub import InferenceClient
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnablePassthrough
 
-# 🛠️ Helper Functions
+
 def extract_youtube_id(url):
     pattern = r"(?:v=|\/)([0-9A-Za-z_-]{11})(?:&|$)"
     match = re.search(pattern, url)
@@ -44,7 +44,7 @@ def build_messages(inputs):
         }
     ]
 
-# 🤖 Zephyr Model Setup
+
 client = InferenceClient(
     model="HuggingFaceH4/zephyr-7b-beta",
     token="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"
@@ -53,9 +53,9 @@ client = InferenceClient(
 zephyr_chat = RunnableLambda(lambda messages: client.chat_completion(messages=messages, max_tokens=512))
 parser = RunnableLambda(lambda x: x.get('content') if isinstance(x, dict) else str(x))
 
-# 🎛️ Streamlit Interface
+
 st.set_page_config(page_title="YouTube RAG Chat", layout="wide")
-st.title("🎥 Chat with a YouTube Video")
+st.title(" Chat with a YouTube Video")
 
 url = st.text_input("🔗 Enter YouTube URL:")
 if url:
@@ -80,7 +80,7 @@ if url:
             if query:
                 with st.spinner("Thinking..."):
                     answer = chain.invoke(query)
-                    st.markdown(f"**🤖 Answer:** {answer}")
+                    st.markdown(f"**Answer:** {answer}")
 
         except TranscriptsDisabled:
             st.error("❌ Transcript is not available for this video.")
